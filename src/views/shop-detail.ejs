@@ -149,7 +149,7 @@
                                                     <div class="d-flex justify-content-between">
                                                     <% if (locals && locals.session && locals.session.user) { %>
                                                         <% if (review.userId === locals.session.user._id) { %>
-                                                        <h5><%= review.name %></h5><span>(Bạn)</span>
+                                                        <h5><%= review.name %></h5><span>(You)</span>
                                                         <% } }else { %>
                                                             <h5><%=review.name %></h5>
                                                             <% } %>
