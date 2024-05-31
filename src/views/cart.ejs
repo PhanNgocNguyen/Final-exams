@@ -177,11 +177,11 @@
       <form action="/api/v1/cart/order" method="post" class="was-validated">
         <% if (locals && locals.session && locals.session.user) { %>
         <div class="form-group">
-            <label for="recipientname">Tên người nhận:</label>
+            <label for="recipientname">Receipt:</label>
             <input type="text" class="form-control" id="recipientname" name="recipientname" placeholder="Nhập tên người nhận hàng" value="<%= locals.session.user.name %>" required>
         </div>
         <div class="form-group">
-            <label for="phone">Số điện thoại:</label>
+            <label for="phone">Number:</label>
             <input type="tel" class="form-control" id="phone" name="phone" placeholder="0123456789" pattern="[0-9]{10}" maxlength="10" value="<%= locals.session.user.phone %>" required>
         </div>
         <div class="form-group">
@@ -189,11 +189,11 @@
             <input type="email" class="form-control" id="email" name="email" placeholder="email@gmail.com" value="<%= locals.session.user.email %>" required>
         </div>
         <div class="form-group">
-            <label for="address">Địa chỉ giao hàng:</label>
+            <label for="address">Address:</label>
             <input type="text" class="form-control" id="address" name="address" placeholder="Nhập địa chỉ giao hàng" value="<%= locals.session.user.address %>" required>
         </div>
         <div class="form-group">
-            <label for="note">Ghi chú (nếu có):</label>
+            <label for="note">Note (if any):</label>
             <input type="text" class="form-control" id="note" name="note">
         </div>
         <input type="hidden" name="totalAmount" value="">
@@ -217,23 +217,23 @@
   <script src="js/main.js"></script>
   <script>
    $(document).ready(function() {
-    // Event listener for Proceed Checkout button
+   
     $('#write-review-btn').on('click', function() {
         // Show the overlay
         $('.thongtinnhanhang-overlay').show();
-        // Show the thongtinnhanhang modal
+       
         $('.thongtinnhanhang').show();
     });
 
-    // Event listener for closing the modal when clicking the overlay
+   
     $('.thongtinnhanhang-overlay').on('click', function() {
-        // Hide the overlay
+       
         $(this).hide();
-        // Hide the thongtinnhanhang
+      
         $('.thongtinnhanhang').hide();
     });
 });
-    // Định nghĩa hàm updateTotals() ở đây để nó trở thành một hàm global
+    
     $(document).ready(function() {
       $('#apply-coupon').on('click', function() {
         const couponCode = $('#coupon-code').val();
@@ -245,12 +245,12 @@
             code: couponCode
           },
           success: function(response) {
-            // Hiển thị thông tin giảm giá
+            
             const discountAmount = response.discountAmount;
             const discountInfo = $('<p>').text('-' + discountAmount + '%');
             $('#coupon-info').html(discountInfo);
 
-            // Cập nhật tổng giá trị
+            
             updateTotals();
           },
           error: function(xhr, status, error) {
@@ -303,7 +303,7 @@
 
       updateTotals();
     });
-  // Sử dụng Ajax để cập nhật số lượng sản phẩm khi nhấn nút +/- trong giỏ hàng
+
 
 </script>
 
