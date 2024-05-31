@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Fruitables - Vegetable Website</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+    <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+<%- include('header') %>
+<!-- form đăng nhập -->
+<div class="container-fluid py-5 mb-5 hero-header">
+    <div class="container py-5">
+        <div class="row g-5 align-items-center">
+            <div class="col-md-12 col-lg-7">
+                <h4 class="mb-3 text-secondary">100% Organic Foods</h4>
+                <h1 class="mb-5 display-3 text-primary">Organic Veggies & Fruits Foods</h1>
+                <div class="position-relative mx-auto">
+                    <form id="check-email-form" class="d-flex">
+                        <input id="email-input" class="form-control border-2 border-secondary w-75 py-3 px-4 rounded-pill" type="email" placeholder="Enter your email" required>
+                        <button type="submit" class="btn btn-primary border-2 border-secondary py-3 px-4 position-absolute rounded-pill text-white" style="top: 0; right: 25%;">
+                          Signup now!</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-5">
+              <div class="login-box">
+                <h2>LOGIN</h2>
+                <% if (typeof message !== 'undefined') { %>
+                    <div class="alert alert-danger" role="alert">
+                        <%= message %>
+                    </div>
+                <% } %>
+                <form action="/api/v1/users/login" method="post">
+                  <div class="user-box">
+                    <label>Username</label>
+                    <input type="text" class="form-control" placeholder="" id="username" name="username" required>
+                  </div>
+                  <div class="user-box">
+                    <label>Password</label>
+                    <input type="password" class="form-control" placeholder="" id="password" name="password" required>
+                  </div>
+                  <div class="position-relative mx-auto">
+                    <button type="submit" class="btn btn-primary border-2 border-secondary py-3 px-4 position-absolute rounded-pill text-white h-200" style="top: 10px; right: 40%;">
+                     Login </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/lib/lightbox/js/lightbox.min.js"></script>
+<script src="/lib/owlcarousel/owl.carousel.min.js"></script>
+
+<!-- Template Javascript -->
+<script src="/js/main.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const checkEmailForm = document.querySelector('#check-email-form');
+    const emailInput = document.querySelector('#email-input');
+
+    checkEmailForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Ngăn chặn gửi form đi
+        const email = emailInput.value;
+
+        // Gửi yêu cầu kiểm tra email đến máy chủ
+        fetch('/api/v1/users/checkemail', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: email })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Reset link has been sent to your email');
+                window.location.href='resetpassword';
+            } else {
+                alert(data.message || 'An error occurred. Please try again.');
+                window.location.href='signup';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again later.');
+        });
+    });
+});
+
+</script>
+</body>
+</html>

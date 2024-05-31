@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Fruitables - Vegetable Website Template</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+  <!-- Google Web Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap" rel="stylesheet">
+
+  <!-- Icon Font Stylesheet -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Libraries Stylesheet -->
+  <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+  <!-- Customized Bootstrap Stylesheet -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Template Stylesheet -->
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<style>
+ .thongtinnhanhang {
+  position: fixed;
+  width: 800px;
+  height: 650px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 1050; /* Giá trị cao để đảm bảo xuất hiện trên tất cả */
+  display: none;
+}
+
+.thongtinnhanhang-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  z-index: 1040; /* Giá trị cao để đảm bảo xuất hiện trên tất cả */
+}
+
+
+</style>
+
+<body>
+  <!-- Include header.ejs -->
+  <%- include('header') %>
+  <!-- Cart Page Start -->
+  <div class="container-fluid py-5" style="margin-top: 55px;">
+    <div class="container py-5">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Products</th>
+              <th scope="col">Name</th>
+              <th scope="col">Price</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Total</th>
+              <th scope="col">Handle</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (locals && locals.session && locals.session.user && carts && carts.length > 0) { %>
+            <% for (let i = 0; i < carts.length; i++) { %>
+            <% if(locals.session.user._id == carts[i].userId) { %>
+            <% for (let j = 0; j < carts[i].items.length; j++) { %>
+
+            <tr data-item-id="<%= carts[i].items[j]._id %>">
+              <th scope="row">
+                <div class="d-flex align-items-center">
+                  <img src="img/<%= carts[i].items[j].image %>" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
+                </div>
+              </th>
+              <td>
+                <p class="mb-0 mt-4"><%= carts[i].items[j].name%></p>
+              </td>
+              <td>
+                <p class="mb-0 mt-4 price" data-price="<%= carts[i].items[j].price %>"><%= new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(carts[i].items[j].price) %></p>
+              </td>
+              <td>
+                <div class="input-group quantity mt-4" style="width: 100px;">
+                  <div class="input-group-btn">
+                    <button class="btn btn-sm btn-minus rounded-circle bg-light border">
+                      <i class="fa fa-minus"></i>
+                    </button>
+                  </div>
+                  <input type="text" class="form-control form-control-sm text-center border-0 quantity-input" value="<%= carts[i].items[j].quantity %>" readonly>
+                  <div class="input-group-btn">
+                    <button class="btn btn-sm btn-plus rounded-circle bg-light border">
+                      <i class="fa fa-plus"></i>
+                    </button>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <p class="mb-0 mt-4 total"><%= carts[i].items[j].price * carts[i].items[j].quantity %></p>
+              </td>
+              <td>
+                <a href="/api/v1/cart/delete-cart/<%= carts[i].items[j]._id %>">
+                  <button class="btn btn-md rounded-circle bg-light border mt-4">
+                    <i class="fa fa-times text-danger"></i>
+                  </button>
+                </a>
+              </td>
+            </tr>
+            <% } %>
+            <% } %>
+            <% } %>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+     
+      <div class="row g-4 justify-content-end">
+        <div class="col-8"></div>
+        <div class="col-sm-8 col-md-7 col-lg-6 col-xl-4">
+          <div class="bg-light rounded">
+            <div class="p-4">
+              <h1 class="display-6 mb-4">Cart <span class="fw-normal">Total</span></h1>
+              <div class="d-flex justify-content-between mb-4">
+                <h5 class="mb-0 me-4">Subtotal:</h5>
+                <p class="mb-0" id="subtotal">0 VND</p>
+              </div>
+              <div class="d-flex justify-content-between mb-4">
+                <h5 class="mb-0 me-4">Shipping:</h5>
+                <div class="">
+                  <p class="mb-0">Flat rate: Free</p>
+                </div>
+              </div>
+              <div class="d-flex justify-content-between mb-4">
+                <h5 class="mb-0 me-4">Coupon:</h5>
+                <div class="">
+                  <p class="mb-0">
+                  <div id="coupon-info"></div>
+                  </p>
+                </div>
+              </div>
+              <div class="d-flex justify-content-between mb-4">
+                <h5 class="mb-0 me-4">Discount:</h5>
+                <div class="">
+                  <p class="mb-0">
+                  <div id="discountprice"></div>
+                  </p>
+                </div>
+              </div>
+
+              <p class="mb-0 text-end">Shipping to Vietnam.</p>
+            </div>
+            <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
+              <h5 class="mb-0 ps-4 me-4">Total</h5>
+              <p class="mb-0 pe-4" id="total" style="font-size: 30px; color: red; font-weight: bold;"></p>
+            </div>
+            <button id="write-review-btn" class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Proceed Checkout</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="thongtinnhanhang-overlay"></div>
+  <div class="thongtinnhanhang" style="display: none;">
+      <h4>Thông tin nhận hàng</h4>
+      <form action="/api/v1/cart/order" method="post" class="was-validated">
+        <% if (locals && locals.session && locals.session.user) { %>
+        <div class="form-group">
+            <label for="recipientname">Tên người nhận:</label>
+            <input type="text" class="form-control" id="recipientname" name="recipientname" placeholder="Nhập tên người nhận hàng" value="<%= locals.session.user.name %>" required>
+        </div>
+        <div class="form-group">
+            <label for="phone">Số điện thoại:</label>
+            <input type="tel" class="form-control" id="phone" name="phone" placeholder="0123456789" pattern="[0-9]{10}" maxlength="10" value="<%= locals.session.user.phone %>" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="email@gmail.com" value="<%= locals.session.user.email %>" required>
+        </div>
+        <div class="form-group">
+            <label for="address">Địa chỉ giao hàng:</label>
+            <input type="text" class="form-control" id="address" name="address" placeholder="Nhập địa chỉ giao hàng" value="<%= locals.session.user.address %>" required>
+        </div>
+        <div class="form-group">
+            <label for="note">Ghi chú (nếu có):</label>
+            <input type="text" class="form-control" id="note" name="note">
+        </div>
+        <input type="hidden" name="totalAmount" value="">
+        <input type="hidden" name="userid" value="<%= locals.session.user._id %>">
+        <input type="hidden" name="username" value="<%= locals.session.user.username %>">
+        <button type="submit" class="btn btn-success" style="float: right;">Lưu lại</button>
+    </form>
+
+      <% } %>
+  </div>
+  <%- include('footer') %>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="lib/easing/easing.min.js"></script>
+  <script src="lib/waypoints/waypoints.min.js"></script>
+  <script src="lib/lightbox/js/lightbox.min.js"></script>
+  <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+  <!-- Template Javascript -->
+  <script src="js/main.js"></script>
+  <script>
+   $(document).ready(function() {
+    // Event listener for Proceed Checkout button
+    $('#write-review-btn').on('click', function() {
+        // Show the overlay
+        $('.thongtinnhanhang-overlay').show();
+        // Show the thongtinnhanhang modal
+        $('.thongtinnhanhang').show();
+    });
+
+    // Event listener for closing the modal when clicking the overlay
+    $('.thongtinnhanhang-overlay').on('click', function() {
+        // Hide the overlay
+        $(this).hide();
+        // Hide the thongtinnhanhang
+        $('.thongtinnhanhang').hide();
+    });
+});
+    // Định nghĩa hàm updateTotals() ở đây để nó trở thành một hàm global
+    $(document).ready(function() {
+      $('#apply-coupon').on('click', function() {
+        const couponCode = $('#coupon-code').val();
+
+        $.ajax({
+          method: 'POST',
+          url: '/api/v1/cart/check-coupon',
+          data: {
+            code: couponCode
+          },
+          success: function(response) {
+            // Hiển thị thông tin giảm giá
+            const discountAmount = response.discountAmount;
+            const discountInfo = $('<p>').text('-' + discountAmount + '%');
+            $('#coupon-info').html(discountInfo);
+
+            // Cập nhật tổng giá trị
+            updateTotals();
+          },
+          error: function(xhr, status, error) {
+            alert('Failed to apply coupon: ' + xhr.responseText);
+          }
+        });
+      });
+
+      function formatCurrency(number) {
+        return new Intl.NumberFormat('vi-VN', {
+          style: 'currency',
+          currency: 'VND'
+        }).format(number);
+      }
+      function updateTotals() {
+        let subtotal = 0;
+        $('tbody tr').each(function() {
+          const price = parseFloat($(this).find('.price').data('price'));
+          const quantity = parseInt($(this).find('.quantity-input').val());
+          const total = price * quantity;
+          $(this).find('.total').text(formatCurrency(total));
+          subtotal += total;
+        });
+        const shipping = 0;
+        const discount = parseFloat($('#coupon-info').text().replace('-', '').replace('%', '')) || 0; // Apply discount
+        const total = subtotal - (subtotal * discount / 100);
+        const discountprice = subtotal * discount / 100;
+
+        $('#discountprice').text(formatCurrency('-' + discountprice));
+        $('#subtotal').text(formatCurrency(subtotal));
+        $('#total').text(formatCurrency(total));
+        sessionStorage.setItem('total', total);
+          const totalAmountInput = document.querySelector('input[name="totalAmount"]');
+          totalAmountInput.value = sessionStorage.getItem('total');
+      }
+
+      $('.btn-plus').off('click').on('click', function() {
+        const input = $(this).closest('.quantity').find('.quantity-input');
+        input.val(parseInt(input.val()) + 1);
+        updateTotals();
+      });
+
+      $('.btn-minus').off('click').on('click', function() {
+        const input = $(this).closest('.quantity').find('.quantity-input');
+        if (parseInt(input.val()) > 1) {
+          input.val(parseInt(input.val()) - 1);
+          updateTotals();
+        }
+      });
+
+      updateTotals();
+    });
+  // Sử dụng Ajax để cập nhật số lượng sản phẩm khi nhấn nút +/- trong giỏ hàng
+
+</script>
+
+</body>
+
+</html>
