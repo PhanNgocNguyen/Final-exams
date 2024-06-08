@@ -68,7 +68,7 @@
         <h2>Fruitables - Admin</h2>
         <ul>
           <li class="coupon-highlight"><a href="admin" style="color: #333;">Product</a></li>
-          <li><a href="../account">Account</a></li>
+          <li><a href="../account" >Account</a></li>
           <li><a href="../orderadmin/pending">Order</a></li>
           <li><a href="/api/v1/users/logout">Logout</a></li>
         </ul>
@@ -101,12 +101,12 @@
                         <td><%= products[i].name %></td>
                         <td><%= new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(products[i].price) %></td>
                         <td><%= new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(products[i].oldPrice) %></td>
-                        <td><%= products[i].quantity %></td>
+                        <td><%= products[i].weight %></td>
                         <td><img height="60" width="80" src="img/<%= products[i].image %>" alt="Product Image"></td>
-                        <td>
-                            <a href="/<%= products[i]._id %>" class="btn btn-primary btn-sm" style="width:80px; margin-right: 5px;">Chi tiết</a>
-                            <a href="/edit/<%= products[i]._id %>" class="btn btn-secondary btn-sm" style="width:80px;">Sửa</a>
-                            <a href="javascript:void(0);" onclick="confirmDeletion('<%= products[i]._id %>')" class="btn btn-danger btn-sm" style="width:80px;">Xóa</a>
+                        <td width="100">
+                            <a href="/<%= products[i]._id %>" class="btn btn-primary btn-sm" style="width:80px; margin-right: 5px;">Details</a>
+                            <a href="/edit/<%= products[i]._id %>" class="btn btn-secondary btn-sm" style="width:80px;">Edit</a>
+                            <a href="javascript:void(0);" onclick="confirmDeletion('<%= products[i]._id %>')" class="btn btn-danger btn-sm" style="width:80px;">Delete</a>
                         </td>
                     </tr>
                     <% } %>

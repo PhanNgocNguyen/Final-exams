@@ -93,11 +93,11 @@
     </div>
     <div class="menu">
     <ul>
-      <li><a href="../orderadmin/pending">Pending</a></li>
-      <li><a href="../orderadmin/processed">Processed</a></li>
-      <li><a href="../orderadmin/intransit">In Transit</a></li>
-      <li><a href="../orderadmin/delivered">Delivered</a></li>
-      <li><a href="../orderadmin/canceled">Canceled</a></li>
+      <li><a href="../orderadmin/Pending">Pending</a></li>
+      <li><a href="../orderadmin/Processed">Processed</a></li>
+      <li><a href="../orderadmin/Intransit">In Transit</a></li>
+      <li><a href="../orderadmin/Delivered">Delivered</a></li>
+      <li><a href="../orderadmin/Cancelled">Canceled</a></li>
     </ul>
     </div>
     <div class="container">
@@ -137,13 +137,13 @@
                             </ul>
                         </td>
                         <td>
-                          <% if (order.status === 'pending') { %>
-                            <button class="btn btn-success" onclick="updateOrderStatus('<%= order._id %>', 'processed')">Confirm</button>
-                            <button class="btn btn-danger" onclick="updateOrderStatus('<%= order._id %>', 'cancelled')">Cancel</button>
-                        <% } else if (order.status === 'processed') { %>
-                            <button class="btn btn-success" onclick="updateOrderStatus('<%= order._id %>', 'intransit')">Deliver</button>
-                        <% } else if (order.status === 'intransit') { %>
-                            <button class="btn btn-success" onclick="updateOrderStatus('<%= order._id %>', 'delivered')">Delivered</button>
+                          <% if (order.status === 'Pending') { %>
+                            <button class="btn btn-success" onclick="updateOrderStatus('<%= order._id %>', 'Processed')">Confirm</button>
+                            <button class="btn btn-danger" onclick="updateOrderStatus('<%= order._id %>', 'Cancelled')">Cancel</button>
+                        <% } else if (order.status === 'Processed') { %>
+                            <button class="btn btn-success" onclick="updateOrderStatus('<%= order._id %>', 'Intransit')">Deliver</button>
+                        <% } else if (order.status === 'Intransit') { %>
+                            <button class="btn btn-success" onclick="updateOrderStatus('<%= order._id %>', 'Delivered')">Delivered</button>
                         <% } %>
 
                         </td>

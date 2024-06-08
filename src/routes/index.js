@@ -34,6 +34,8 @@ router.get('/login', (req, res) => {
 router.get('/chat', (req, res) => {
     res.render('chat');
 });
+
+
 router.get('/search', async (req, res) => {
     try {
         const productsFind = await productController.findProductByName(req, res);
@@ -54,6 +56,17 @@ router.get('/', async (req, res) => {
         res.status(500).send("An error occurred while rendering the page.");
     }
 });
+
+router.get('/productlist', async (req, res) => {
+    try {
+        const productsFromDB = await productController.getProductList();
+        res.render('shop', { products: productsFromDB });
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        res.status(500).send("An error occurred while rendering the page.");
+    }
+});
+
 
 router.get('/check-session', (req, res) => {
     console.log("Session data:", req.session);
@@ -163,7 +176,7 @@ router.get('/orderadmin/:status', async (req, res) => {
     try {
         const status = req.params.status;
         const orders = await cartController.getOrderAdmin(status); // Truyền status vào hàm getOrderAdmin
-        res.render('../views/admin/ordercontroll', { orders: orders });
+        res.render('../views/admin/orderadmin', { orders: orders });
     } catch (error) {
         console.error('Error fetching cart:', error);
         res.status(500).send("An error occurred while rendering the page.");
