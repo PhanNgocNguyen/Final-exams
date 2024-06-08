@@ -31,10 +31,10 @@
     }
     #sidebar li {
       margin-left: 10px;
-      border: 1px solid #fff; /* Add border around each li */
-      padding: 5px 10px; /* Add padding inside the border */
-      border-radius: 4px; /* Optional: Add rounded corners */
-      box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+      border: 1px solid #fff; 
+      padding: 5px 10px; 
+      border-radius: 4px;
+      box-sizing: border-box; 
     }
     #sidebar li a {
       text-decoration: none;
@@ -45,12 +45,12 @@
       padding: 20px;
       overflow: auto;
     }
-    /* Highlight the Coupon button */
+    
     .coupon-highlight {
-      background-color: #ff0; /* Bright yellow background */
-      color: #333; /* Dark text color for contrast */
-      font-weight: bold; /* Make the text bold */
-      border-color: #ff0; /* Match the border color with the background */
+      background-color: #ff0; 
+      color: #333;
+      font-weight: bold; 
+      border-color: #ff0; 
     }
     .menu {
       width: 100%;
@@ -68,15 +68,15 @@
     }
     .menu  li {
       margin-left: 10px;
-      border: 1px solid black; /* Add border around each li */
-      padding: 5px 10px; /* Add padding inside the border */
-      border-radius: 4px; /* Optional: Add rounded corners */
-      box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+      border: 1px solid black;
+      padding: 5px 10px; 
+      border-radius: 4px;
+      box-sizing: border-box; 
     }
     .menu  li a {
       text-decoration: none;
       color:black;
-    }/* CSS classes for different order statuses */
+    }
 
 
   </style>
@@ -169,7 +169,7 @@
                 const data = await response.json();
                 if (response.ok) {
                     alert(data.message);
-                    location.reload(); // Reload the page to see the updated status
+                    location.reload(); 
                 } else {
                     alert(data.message);
                 }
@@ -179,10 +179,10 @@
             }
         }
         document.addEventListener('DOMContentLoaded', function() {
-            // Get the current URL path
+            
             const path = window.location.pathname;
 
-            // Find the corresponding menu item and add the 'coupon-highlight' class if it matches the current URL path
+            
             document.querySelectorAll('.menu li a').forEach(function(item) {
                 if (item.getAttribute('href').startsWith('../orderadmin/')) {
                     const status = item.getAttribute('href').split('../orderadmin/')[1];
