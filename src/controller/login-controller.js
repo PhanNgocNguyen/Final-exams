@@ -129,7 +129,7 @@ class LoginController {
             const userData = req.body;
             // Log the incoming data for debugging
             console.log("Updating user ID:", userId);
-            console.log("user data:", userData);
+            console.log("User data:", userData);
             // Ensure to use the { new: true } option to return the updated document
             const updateduser = await userModel.findByIdAndUpdate(userId, userData, { new: true });
 
