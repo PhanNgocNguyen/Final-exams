@@ -112,14 +112,14 @@
 </body>
 <script>
     function confirmDeletion(userId) {
-        if (confirm('Bạn có chắc chắn muốn xóa tài khoản này không?')) {
+        if (confirm('Are you sure you want to delete this user?')) {
             window.location.href = '../api/v1/users/deleteaccount/' + userId;
         }
     }
 
     function lockAccount(userId) {
-        if (confirm('Bạn có chắc chắn muốn khóa hoặc mở tài khoản này không?')) {
-            window.location.href = '../api/v1/users/lockaccount/' + userId; // Đổi đường dẫn tới router xử lý khóa tài khoản
+        if (confirm('Are you sure you want to lock this user?')) {
+            window.location.href = '../api/v1/users/lockaccount/' + userId;
         }
     }
 </script>
