@@ -24,6 +24,7 @@ email: {
 },
 tinhtrang:{
     type: String,
+    default: 'unlocked'
 },
 role: {
     type: String,

@@ -66,17 +66,16 @@ class LoginController {
                 console.error('User not found for ID:', userId);
                 return res.status(404).json({ message: 'User not found' });
             }
-            if(user.tinhtrang == 'khóa')
+            if(user.tinhtrang == 'Locked')
                 {
-                    user.tinhtrang = 'mở';
+                    user.tinhtrang = 'Unlocked';
                 }
-            // Thực hiện logic để khóa tài khoản ở đây, ví dụ:
+          
                 else{
-                    user.tinhtrang = 'khóa';
+                    user.tinhtrang = 'Locked';
                 }
             await user.save();
 
-            // Sau khi khóa tài khoản, bạn có thể chuyển hướng hoặc cập nhật trang account
             return res.redirect('/account');
         } catch (error) {
             console.error('Error locking account:', error);
